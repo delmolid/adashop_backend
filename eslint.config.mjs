@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs', './generated/*'],
+    ignores: ['eslint.config.mjs', './src/generated/*'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
