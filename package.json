@@ -18,11 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/client": "^6.7.0",
     "reflect-metadata": "^0.2.2",
@@ -78,5 +80,8 @@
   "lint-staged": {
     "*.{js, ts}": "eslint --cache --fix",
     "*.{js, ts, md, mjs, json}": "prettier --write --ignore-unknown"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
   }
 }
