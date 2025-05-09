@@ -1,7 +1,7 @@
-// src/items/items.service.ts
+// src\items\items.service.ts
 
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 
@@ -9,18 +9,18 @@ import { UpdateItemDto } from './dto/update-item.dto';
 export class ItemsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  create(createItemDto: CreateItemDto) {
+    return this.prisma.item.create({ data: createItemDto });
+  }
+
   findAll() {
     return this.prisma.item.findMany();
   }
 
   async findOne(id: number) {
     const item = await this.prisma.item.findUnique({ where: { id } });
-    if (!item) throw new NotFoundException(`Item ${id} not found`);
+    if (!item) throw new NotFoundException(`Item #${id} not found`);
     return item;
-  }
-
-  create(dto: CreateItemDto) {
-    return this.prisma.item.create({ data: dto });
   }
 
   update(id: number, dto: UpdateItemDto) {

@@ -1,4 +1,5 @@
-// src/items/items.controller.ts
+// src\items\items.controller.ts
+
 import {
   Controller,
   Get,
@@ -15,30 +16,30 @@ import { UpdateItemDto } from './dto/update-item.dto';
 
 @Controller('items')
 export class ItemsController {
-  constructor(private readonly itemsService: ItemsService) {}
+  constructor(private readonly items: ItemsService) {}
+
+  @Post()
+  create(@Body() dto: CreateItemDto) {
+    return this.items.create(dto);
+  }
 
   @Get()
   findAll() {
-    return this.itemsService.findAll();
+    return this.items.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.itemsService.findOne(id);
-  }
-
-  @Post()
-  create(@Body() dto: CreateItemDto) {
-    return this.itemsService.create(dto);
+    return this.items.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateItemDto) {
-    return this.itemsService.update(id, dto);
+    return this.items.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.itemsService.remove(id);
+    return this.items.remove(id);
   }
 }

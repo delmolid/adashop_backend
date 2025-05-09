@@ -3,33 +3,34 @@
 // @ts-check
 import eslint from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin, {
-  configs as tsConfigs,
-} from '@typescript-eslint/eslint-plugin';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.mjs', './src/generated/*'],
   },
   eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
   {
     languageOptions: {
-      parser: tsParser,
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      sourceType: 'commonjs',
       parserOptions: {
-        project: './tsconfig.json',
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
-        sourceType: 'module',
-        ecmaVersion: 2020,
       },
     },
-    plugins: { '@typescript-eslint': tsPlugin },
+  },
+  {
     rules: {
-      ...tsConfigs.recommendedTypeChecked.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
     },
   },
-];
+);

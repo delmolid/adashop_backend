@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["datasource", "mysql", "prisma"]
+  "cSpell.words": [
+    "classpath",
+    "datasource",
+    "dotenv",
+    "mysql",
+    "nestjs",
+    "prisma"
+  ]
 }
