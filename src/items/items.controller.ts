@@ -10,15 +10,19 @@ import {
   Body,
   ParseIntPipe,
 } from "@nestjs/common";
+import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { ItemsService } from "./items.service";
 import { CreateItemDto } from "./dto/create-item.dto";
 import { UpdateItemDto } from "./dto/update-item.dto";
 
+@ApiTags("items")
 @Controller("items")
 export class ItemsController {
   constructor(private readonly items: ItemsService) {}
 
   @Post()
+  @ApiOperation({ summary: "Create an item" })
+  @ApiResponse({ status: 201, description: "The created item." })
   create(@Body() dto: CreateItemDto) {
     return this.items.create(dto);
   }
